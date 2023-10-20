@@ -18,4 +18,12 @@ class AURA_API AAuraEnemy : public AAuraCharacterBase, public IInteractable
 public:
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
+
+protected:
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_HighlightActor();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_UnHighlightActor();
 };
