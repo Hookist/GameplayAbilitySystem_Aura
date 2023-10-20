@@ -1,0 +1,6 @@
+// Copyright Stas Company
+
+
+#include "Interaction/Interactable.h"
+
+// Add default functionality here for any IInteractable functions that are not pure virtual.
