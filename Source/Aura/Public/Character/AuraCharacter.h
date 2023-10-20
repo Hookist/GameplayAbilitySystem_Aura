@@ -6,6 +6,8 @@
 #include "Character/AuraCharacterBase.h"
 #include "AuraCharacter.generated.h"
 
+class UCameraComponent;
+class USpringArmComponent;
 /**
  * 
  */
@@ -13,5 +15,16 @@ UCLASS()
 class AURA_API AAuraCharacter : public AAuraCharacterBase
 {
 	GENERATED_BODY()
+
+protected:
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UCameraComponent* CameraComponent;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	USpringArmComponent* CameraSpringArmComponent;
+
+public:
+	
+	AAuraCharacter();
 };
