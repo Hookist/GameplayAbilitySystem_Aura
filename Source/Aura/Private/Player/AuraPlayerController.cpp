@@ -3,9 +3,11 @@
 
 #include "Player/AuraPlayerController.h"
 
+#include "AbilitySystemComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Interaction/Interactable.h"
+#include "Player/AuraPlayerState.h"
 
 AAuraPlayerController::AAuraPlayerController()
 {

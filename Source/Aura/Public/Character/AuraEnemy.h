@@ -21,6 +21,10 @@ class AURA_API AAuraEnemy : public AAuraCharacterBase, public IInteractable
 public:
 
 	AAuraEnemy();
+
+	virtual void BeginPlay() override;
+
+#pragma region Interactable
 	
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
@@ -32,4 +36,6 @@ protected:
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void BP_UnHighlightActor();
+
+#pragma endregion
 };
