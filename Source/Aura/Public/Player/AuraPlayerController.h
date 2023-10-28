@@ -42,6 +42,7 @@ private:
 	void Move(const FInputActionValue& InputActionValue);
 
 	void CursorTrace();
-	IInteractable* LastActor;
-	IInteractable* CurrentActor;
+	
+	TObjectPtr<IInteractable> LastActor;
+	TObjectPtr<IInteractable> CurrentActor;
 };
