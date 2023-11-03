@@ -18,7 +18,7 @@ struct FEffectProperties
 {
 	GENERATED_BODY()
 
-	FEffectProperties();
+	FEffectProperties() {};
 
 	UPROPERTY(BlueprintReadOnly)
 	FGameplayEffectContextHandle EffectContextHandle;

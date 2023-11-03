@@ -59,6 +59,10 @@ protected:
 	EEffectRemovalPolicy InfinityEffectRemovalPolicy = EEffectRemovalPolicy::RemoveOnOverlap;
 
 	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveEffectHandles;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
+	float ActorLevel = 1.f;
+	
 public:	
 	// Sets default values for this actor's properties
 	AAuraEffectActor();
