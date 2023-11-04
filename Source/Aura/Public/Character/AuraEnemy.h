@@ -37,5 +37,7 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void BP_UnHighlightActor();
 
+	virtual void InitAbilityActorInfo() override;
+
 #pragma endregion
 };

@@ -35,4 +35,8 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
+
+protected:
+
+	virtual void InitAbilityActorInfo();
 };

@@ -32,7 +32,7 @@ public:
 
 	virtual void OnRep_PlayerState() override;
 
-private:
+protected:
 
-	void InitAbilityActorInfo();
+	virtual void InitAbilityActorInfo() override;
 };
