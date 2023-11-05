@@ -64,4 +64,6 @@ void AAuraCharacter::InitAbilityActorInfo()
 			AbilitySystemComponent, AttributeSet);
 		}
 	}
+
+	InitializePrimaryAttributes();
 }
