@@ -7,7 +7,6 @@
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "GameFramework/GameModeBase.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Player/AuraPlayerState.h"
 #include "UI/HUD/AuraHUD.h"
@@ -43,6 +42,13 @@ void AAuraCharacter::OnRep_PlayerState()
 
 	// Init ability actor info for the Client
 	InitAbilityActorInfo();
+}
+
+int32 AAuraCharacter::GetCreatureLevel()
+{
+	const auto auraPlayerState = GetPlayerState<AAuraPlayerState>();
+	check(auraPlayerState);
+	return auraPlayerState->GetCreatureLevel();
 }
 
 void AAuraCharacter::InitAbilityActorInfo()

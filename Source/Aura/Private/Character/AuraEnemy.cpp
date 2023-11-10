@@ -27,6 +27,11 @@ void AAuraEnemy::BeginPlay()
 	InitAbilityActorInfo();
 }
 
+int32 AAuraEnemy::GetCreatureLevel()
+{
+	return Level;
+}
+
 void AAuraEnemy::HighlightActor()
 {
 	UE_LOG(LogTemp, Display, TEXT("%hs %s"), __FUNCTION__, *GetActorNameOrLabel());

@@ -33,6 +33,12 @@ public:
 
 	virtual void OnRep_PlayerState() override;
 
+#pragma region Combat Interface
+
+	virtual int32 GetCreatureLevel() override;
+	
+#pragma endregion 
+
 protected:
 
 	virtual void InitAbilityActorInfo() override;

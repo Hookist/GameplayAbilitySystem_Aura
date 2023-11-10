@@ -24,6 +24,12 @@ public:
 
 	virtual void BeginPlay() override;
 
+#pragma region Combat Interface
+
+	virtual int32 GetCreatureLevel() override;
+	
+#pragma endregion
+
 #pragma region Interactable
 	
 	virtual void HighlightActor() override;
@@ -40,4 +46,9 @@ protected:
 	virtual void InitAbilityActorInfo() override;
 
 #pragma endregion
+
+protected:
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
+	int32 Level = 1;
 };

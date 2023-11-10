@@ -43,6 +43,6 @@ private:
 
 	void CursorTrace();
 	
-	TObjectPtr<IInteractable> LastActor;
-	TObjectPtr<IInteractable> CurrentActor;
+	IInteractable* LastActor;
+	IInteractable* CurrentActor;
 };
