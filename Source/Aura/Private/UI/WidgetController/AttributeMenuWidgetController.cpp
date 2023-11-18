@@ -1,7 +1,7 @@
 // Copyright Stas Company
 
 
-#include "UI/WidgetController/AuraMenuWidgetController.h"
+#include "..\..\..\Public\UI\WidgetController\AttributeMenuWidgetController.h"
 
 #include "AuraGameplayTags.h"
 #include "AbilitySystem/Data/AttributeInfo.h"

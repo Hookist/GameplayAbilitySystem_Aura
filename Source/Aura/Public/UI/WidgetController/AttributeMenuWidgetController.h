@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UI/WidgetController/AuraWidgetController.h"
-#include "AuraMenuWidgetController.generated.h"
+#include "AttributeMenuWidgetController.generated.h"
 
 class UAttributeInfo;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAttributeInfoSignature, const FAuraAttributeInfo&, Info);
