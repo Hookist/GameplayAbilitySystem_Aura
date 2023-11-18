@@ -3,12 +3,21 @@
 
 #include "UI/WidgetController/AuraMenuWidgetController.h"
 
+#include "AuraGameplayTags.h"
+#include "AbilitySystem/Data/AttributeInfo.h"
+
 void UAttributeMenuWidgetController::BroadcastInitialValues()
 {
 	Super::BroadcastInitialValues();
 
 	const auto auraAttributeSet = Cast<UAuraAttributeSet>(AttributeSet);
 
+	check(auraAttributeSet);
+
+	FAuraAttributeInfo info = AttributeInfo->FindAttributeInfoForTag(FAuraGameplayTags::Get().Attributes_Primary_Strength);
+	info.AttributeValue = auraAttributeSet->GetStrength();
+	AttributeInfoDelegate.Broadcast(info);
+	
 	OnArmorChanged.Broadcast(auraAttributeSet->GetArmor());
 	OnMaxHealthChanged.Broadcast(auraAttributeSet->GetMaxHealth());
 	OnMaxManaChanged.Broadcast(auraAttributeSet->GetMaxMana());

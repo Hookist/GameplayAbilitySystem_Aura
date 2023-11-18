@@ -6,6 +6,9 @@
 #include "UI/WidgetController/AuraWidgetController.h"
 #include "AuraMenuWidgetController.generated.h"
 
+class UAttributeInfo;
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAttributeInfoSignature, const FAuraAttributeInfo&, Info);
+
 /**
  * 
  */
@@ -19,6 +22,9 @@ public:
 	virtual void BroadcastInitialValues() override;
 
 	virtual void BindCallbacksToDependencies() override;
+
+	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
+	FAttributeInfoSignature AttributeInfoDelegate;
 
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
 	FOnAttributeChangedSignature OnArmorChanged;
@@ -50,4 +56,9 @@ public:
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
 	FOnAttributeChangedSignature OnManaRegenerationChanged;
 
+protected:
+
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UAttributeInfo> AttributeInfo;
+	
 };
