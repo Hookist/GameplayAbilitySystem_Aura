@@ -3,7 +3,7 @@
 
 #include "UI/WidgetController/AuraMenuWidgetController.h"
 
-void UAuraMenuWidgetController::BroadcastInitialValues()
+void UAttributeMenuWidgetController::BroadcastInitialValues()
 {
 	Super::BroadcastInitialValues();
 
@@ -21,7 +21,7 @@ void UAuraMenuWidgetController::BroadcastInitialValues()
 	OnManaRegenerationChanged.Broadcast(auraAttributeSet->GetManaRegeneration());
 }
 
-void UAuraMenuWidgetController::BindCallbacksToDependencies()
+void UAttributeMenuWidgetController::BindCallbacksToDependencies()
 {
 	Super::BindCallbacksToDependencies();
 
