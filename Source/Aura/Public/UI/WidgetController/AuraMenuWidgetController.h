@@ -6,8 +6,6 @@
 #include "UI/WidgetController/AuraWidgetController.h"
 #include "AuraMenuWidgetController.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float, NewValue);
-
 /**
  * 
  */
