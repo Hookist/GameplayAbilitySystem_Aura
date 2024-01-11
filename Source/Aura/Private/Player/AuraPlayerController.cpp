@@ -26,6 +26,30 @@ void AAuraPlayerController::PlayerTick(float DeltaTime)
 	Super::PlayerTick(DeltaTime);
 
 	CursorTrace();
+
+	AutoRun();
+}
+
+void AAuraPlayerController::AutoRun()
+{
+	if (!bAutoRunning)
+		return;
+	
+	if (APawn* controlledPawn = GetPawn())
+	{
+		const FVector locationOnSpline =
+			Spline->FindLocationClosestToWorldLocation(controlledPawn->GetActorLocation(),
+			ESplineCoordinateSpace::World);
+		const FVector direction =
+			Spline->FindDirectionClosestToWorldLocation(locationOnSpline, ESplineCoordinateSpace::World);
+		controlledPawn->AddMovementInput(direction);
+
+		const float distanceToDestination = (locationOnSpline - CachedDestination).Length();
+		if (distanceToDestination <= AutoRunAcceptanceRadius)
+		{
+			bAutoRunning = false;
+		}
+	}
 }
 
 void AAuraPlayerController::BeginPlay()
@@ -182,6 +206,7 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 					DrawDebugSphere(GetWorld(), pointLoc, 8.f, 8,
 						FColor::Green, false, 5.f);
 				}
+				CachedDestination = navPath->PathPoints[navPath->PathPoints.Num() - 1];
 				bAutoRunning = true;
 			}
 		}
@@ -234,3 +259,4 @@ UAuraAbilitySystemComponent* AAuraPlayerController::GetASC()
 	}
 	return AuraAbilitySystemComponent;
 }
+
