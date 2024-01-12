@@ -49,6 +49,7 @@ private:
 	
 	IInteractable* LastActor;
 	IInteractable* CurrentActor;
+	FHitResult CursorHit;
 
 	void AbilityInputTagPressed(FGameplayTag InputTag);
 	void AbilityInputTagReleased(FGameplayTag InputTag);
