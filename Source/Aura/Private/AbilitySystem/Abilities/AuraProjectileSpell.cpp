@@ -13,7 +13,12 @@ void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Hand
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 
-	const bool bIServer = HasAuthority(&ActivationInfo);
+	
+}
+
+void UAuraProjectileSpell::SpawnProjectile()
+{
+	const bool bIServer = GetAvatarActorFromActorInfo()->HasAuthority();
 	if (!bIServer) return;
 
 	ICombatInterface* combatInterface = Cast<ICombatInterface>(GetAvatarActorFromActorInfo());
