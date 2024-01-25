@@ -20,7 +20,15 @@ void UTargetDataUnderMouse::Activate()
 	}
 	else
 	{
-		//TODO: We are on the server, so listen for target data.
+		const FGameplayAbilitySpecHandle specHandle = GetAbilitySpecHandle();
+		const FPredictionKey activationPredictionKey = GetActivationPredictionKey();
+		AbilitySystemComponent.Get()->AbilityTargetDataSetDelegate(specHandle, activationPredictionKey)
+			.AddUObject(this, &UTargetDataUnderMouse::OnTargetDataReplicatedCallback);
+		const bool bCalledDelegate = AbilitySystemComponent.Get()->CallReplicatedTargetDataDelegatesIfSet(specHandle, activationPredictionKey);
+		if (!bCalledDelegate)
+		{
+			SetWaitingOnRemotePlayerData();
+		}
 	}
 	
 	// AActor* avatarActor = AbilitySystemComponent.Get()->GetAvatarActor();
@@ -52,26 +60,34 @@ void UTargetDataUnderMouse::SendMouseCursorData()
 {
 	FScopedPredictionWindow scopedPrediction(AbilitySystemComponent.Get());
 	
-	FVector hitLocation;
 	APlayerController* pawnPlayerController = Ability->GetActorInfo().PlayerController.Get();
 	FHitResult cursorHit;
 	pawnPlayerController->GetHitResultUnderCursor(ECC_Visibility, false, cursorHit);
-	hitLocation = cursorHit.Location;
 	
 	FGameplayAbilityTargetDataHandle dataHandle;	
-	FGameplayAbilityTargetData_SingleTargetHit* data = new FGameplayAbilityTargetData_SingleTargetHit();
+	auto data = new FGameplayAbilityTargetData_SingleTargetHit();
 	data->HitResult = cursorHit;
 	dataHandle.Add(data);
 	
 	AbilitySystemComponent->ServerSetReplicatedTargetData(
 		GetAbilitySpecHandle(),
 		GetActivationPredictionKey(),
-		data,
+		dataHandle,
 		FGameplayTag(),
 		AbilitySystemComponent->ScopedPredictionKey);
 
 	if (ShouldBroadcastAbilityTaskDelegates())
 	{
 		ValidData.Broadcast(dataHandle);
+	}
+}
+
+void UTargetDataUnderMouse::OnTargetDataReplicatedCallback(const FGameplayAbilityTargetDataHandle& DataHandle,
+	FGameplayTag ActivationTag)
+{
+	AbilitySystemComponent->ConsumeClientReplicatedTargetData(GetAbilitySpecHandle(), GetActivationPredictionKey());
+	if (ShouldBroadcastAbilityTaskDelegates())
+	{
+		ValidData.Broadcast(DataHandle);
 	}
 }
