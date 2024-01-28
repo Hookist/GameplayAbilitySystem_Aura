@@ -67,4 +67,5 @@ protected:
 	void InitializeDefaultAttributes() const;
 
 	void AddCharacterAbilities();
+	
 };
