@@ -5,8 +5,10 @@
 #include "CoreMinimal.h"
 #include "Character/AuraCharacterBase.h"
 #include "Interaction/Interactable.h"
+#include "UI/WidgetController/AuraWidgetController.h"
 #include "AuraEnemy.generated.h"
 
+class UWidgetComponent;
 class UAbilitySystemComponent;
 class UAttributeSet;
 
@@ -17,6 +19,11 @@ UCLASS()
 class AURA_API AAuraEnemy : public AAuraCharacterBase, public IInteractable
 {
 	GENERATED_BODY()
+
+protected:
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<UWidgetComponent> HealthWidgetComponent;
 
 public:
 
@@ -47,8 +54,15 @@ protected:
 
 #pragma endregion
 
+	UPROPERTY(BlueprintAssignable)
+	FOnAttributeChangedSignature OnHealthChanged;
+	
+	UPROPERTY(BlueprintAssignable)
+	FOnAttributeChangedSignature OnMaxHealthChanged;
+	
 protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
 	int32 Level = 1;
+	
 };
