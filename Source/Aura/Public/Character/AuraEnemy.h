@@ -28,6 +28,9 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, Category = "Combat")
 	float BaseWalkSpeed = 250.f;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Combat")
+	float LifeSpan = 5.f;
 	
 protected:
 
@@ -43,6 +46,8 @@ public:
 #pragma region Combat Interface
 
 	virtual int32 GetCreatureLevel() override;
+
+	virtual void Die() override;
 	
 #pragma endregion
 
