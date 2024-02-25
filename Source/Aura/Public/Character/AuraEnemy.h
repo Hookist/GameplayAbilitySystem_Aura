@@ -21,6 +21,14 @@ class AURA_API AAuraEnemy : public AAuraCharacterBase, public IInteractable
 {
 	GENERATED_BODY()
 
+public:
+
+	UPROPERTY(BlueprintReadOnly, Category = "Combat")
+	bool bHitReacting = false;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Combat")
+	float BaseWalkSpeed = 250.f;
+	
 protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -70,5 +78,7 @@ protected:
 	ECharacterClass CharacterClass = ECharacterClass::Warrior;
 
 	virtual void InitializeDefaultAttributes() const override;
-	
+
+	UFUNCTION()
+	void HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
 };
