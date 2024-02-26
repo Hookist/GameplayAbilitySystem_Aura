@@ -9,7 +9,9 @@
 #include "GameplayEffectExtension.h"
 #include "GameFramework/Character.h"
 #include "Interaction/CombatInterface.h"
+#include "Kismet/GameplayStatics.h"
 #include "Net/UnrealNetwork.h"
+#include "Player/AuraPlayerController.h"
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
@@ -120,6 +122,8 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 				tagContainer.AddTag(FAuraGameplayTags::Get().Effects_HitReact);
 				props.TargetASC->TryActivateAbilitiesByTag(tagContainer);
 			}
+
+			ShowFloatingText(props, localIncomeDamage);
 		}
 	}
 }
@@ -234,7 +238,19 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 	{
 		Props.TargetAvatarActor = Data.Target.AbilityActorInfo->AvatarActor.Get();
 		Props.SourceController = Data.Target.AbilityActorInfo->PlayerController.Get();
-		Props.TargetAvatarActor = Cast<ACharacter>(Props.TargetAvatarActor);
+		Props.TargetCharacter = Cast<ACharacter>(Props.TargetAvatarActor);
 		Props.TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(Props.TargetAvatarActor);
+	}
+}
+
+void UAuraAttributeSet::ShowFloatingText(const FEffectProperties& Props, float Damage) const
+{
+	if (Props.SourceCharacter != Props.TargetCharacter)
+	{
+		auto pc = Cast<AAuraPlayerController>(UGameplayStatics::GetPlayerController(Props.SourceCharacter, 0));
+		if (pc)
+		{
+			pc->ShowDamageNumber(Damage, Props.TargetCharacter);
+		}
 	}
 }
