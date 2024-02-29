@@ -4,6 +4,7 @@
 #include "AbilitySystem/ExecCalc/ExecCalc_Damage.h"
 
 #include "AbilitySystemComponent.h"
+#include "AuraAbilityTypes.h"
 #include "AuraGameplayTags.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AbilitySystem/AuraAttributeSet.h"
@@ -80,6 +81,10 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	targetBlockChance = FMath::Max<float>(0.f, targetBlockChance);
 	
 	const bool bBlocked = FMath::RandRange(1, 100) <= targetBlockChance;
+
+	FGameplayEffectContextHandle effectContextHandle = spec.GetContext();
+	UAuraAbilitySystemLibrary::SetIsBlockedHit(effectContextHandle, bBlocked);
+	
 	// if Block, halve the damage.
 	damage = bBlocked ? UKismetMathLibrary::SafeDivide(damage, 2.f) : damage;
 	
@@ -120,6 +125,8 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	const float criticalHitResistanceCoefficient = criticalHitResistanceCurve->Eval(targetCombatInterface->GetCreatureLevel());
 	
 	const bool bCriticalHit = FMath::RandRange(1, 100) <= sourceCriticalHitChance - (targetCriticalHitResistance * criticalHitResistanceCoefficient);
+	UAuraAbilitySystemLibrary::SetIsCriticalHit(effectContextHandle, bCriticalHit);
+
 	// if critical hit then increase damage
 	damage = bCriticalHit ? 2.f * damage + sourceCriticalDamage : damage; 
 	
