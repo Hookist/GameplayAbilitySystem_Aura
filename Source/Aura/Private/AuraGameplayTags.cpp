@@ -101,6 +101,11 @@ FString("mana"));
 	UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Damage"),
 											 FString("Damage"));
 
+	GameplayTags.Damage_Fire = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Damage.Fire"),
+	FString("Fire damage type"));
+
+	GameplayTags.DamageTypes.Add(GameplayTags.Damage_Fire);
+
 	/*
 	* Effects
 	*/

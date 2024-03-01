@@ -72,7 +72,12 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	const UCharacterClassInfo* characterClassInfo = UAuraAbilitySystemLibrary::GetCharacterClassInfo(sourceAvatar);
 
 	// Get Damage set by Caller Magnitude
-	float damage = spec.GetSetByCallerMagnitude(FAuraGameplayTags::Get().Damage);
+	float damage = 0.f;
+	for (FGameplayTag damageTypeTag : FAuraGameplayTags::Get().DamageTypes)
+	{
+		const float damageTypeValue = spec.GetSetByCallerMagnitude(damageTypeTag);
+		damage += damageTypeValue;
+	}
 	
 	// Capture BlockChance on Target, and determine if there was a successful Block
 
