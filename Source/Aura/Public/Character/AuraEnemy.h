@@ -12,6 +12,8 @@
 class UWidgetComponent;
 class UAbilitySystemComponent;
 class UAttributeSet;
+class UBehaviorTree;
+class AAuraAIController;
 
 /**
  * 
@@ -42,6 +44,8 @@ public:
 	AAuraEnemy();
 
 	virtual void BeginPlay() override;
+
+	virtual void PossessedBy(AController* NewController) override;
 
 #pragma region Combat Interface
 
@@ -86,4 +90,16 @@ protected:
 
 	UFUNCTION()
 	void HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
+
+#pragma region AI related
+
+protected:
+
+	UPROPERTY(EditAnywhere, Category = "AI")
+	TObjectPtr<UBehaviorTree> BehaviorTree;
+
+	UPROPERTY()
+	TObjectPtr<AAuraAIController> AuraAIController;
+	
+#pragma endregion 
 };
