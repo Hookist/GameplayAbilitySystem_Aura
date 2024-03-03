@@ -142,4 +142,12 @@ FString("mana"));
 	GameplayTags.Effects_HitReact =
 		UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Effects.HitReact"),
 										 FString("Hit react effect"));
+
+	/*
+	 * Abilities
+	 */
+
+	GameplayTags.Abilities_Attack =
+		UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Abilities.Attack"),
+										 FString("Attack ability Tag"));
 }
