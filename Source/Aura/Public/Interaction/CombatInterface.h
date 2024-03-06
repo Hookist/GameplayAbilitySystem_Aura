@@ -39,7 +39,7 @@ public:
 	virtual int32 GetCreatureLevel() { return 0; };
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	 FVector GetCombatSocketLocation();
+	FVector GetCombatSocketLocation(const FGameplayTag& MontageTag);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetFacingTarget(const FVector& FacingTarget);
