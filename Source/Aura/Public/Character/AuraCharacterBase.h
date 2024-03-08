@@ -8,6 +8,7 @@
 #include "Interaction/CombatInterface.h"
 #include "AuraCharacterBase.generated.h"
 
+class UNiagaraSystem;
 class UGameplayAbility;
 class UAbilitySystemComponent;
 class UAttributeSet;
@@ -40,10 +41,14 @@ public:
 	virtual AActor* GetAvatar_Implementation() override;
 	virtual FVector GetCombatSocketLocation_Implementation(const FGameplayTag& MontageTag) override;
 	virtual TArray<FTaggedMontage> GetAttackMontages_Implementation() override;
+	virtual UNiagaraSystem* GetBloodEffect_Implementation() override;
 
 protected:
 
 	bool bDead = false;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
+	UNiagaraSystem* BloodEffect;
 
 #pragma endregion
 
