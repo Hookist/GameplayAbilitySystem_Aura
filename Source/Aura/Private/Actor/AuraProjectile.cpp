@@ -58,7 +58,9 @@ void AAuraProjectile::Destroyed()
 		GetActorLocation(),
 		FRotator::ZeroRotator);
 
-		UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ImpactEffect, GetActorLocation());	
+		UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ImpactEffect, GetActorLocation());
+
+		bHit = true;
 	}
 	Super::Destroyed();
 }
@@ -85,6 +87,8 @@ void AAuraProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, 
 		FRotator::ZeroRotator);
 
 		UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, ImpactEffect, GetActorLocation());
+		if (FlyingSoundComponent) FlyingSoundComponent->Stop();
+		bHit = true;
 	}
 
 
