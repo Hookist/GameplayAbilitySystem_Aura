@@ -34,7 +34,7 @@ AAuraEnemy::AAuraEnemy()
 	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
 
 	HealthWidgetComponent = CreateDefaultSubobject<UWidgetComponent>("HealthWidgetComponent");
-	HealthWidgetComponent->SetupAttachment(GetMesh());
+	HealthWidgetComponent->SetupAttachment(GetRootComponent());
 }
 
 void AAuraEnemy::BeginPlay()
