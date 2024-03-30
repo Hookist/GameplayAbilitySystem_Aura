@@ -20,15 +20,17 @@ TArray<FVector> UAuraSummonAbility::GetSpawnLocations()
 										 location + direction * MaxSpawnDistance,
 										 8.f, FLinearColor::Green, 3.f);
 
-		const FVector chosenSpawnLocation = location + direction * FMath::FRandRange(MinSpawnDistance, MaxSpawnDistance);
-		spawnLocation.Add(chosenSpawnLocation);
-		DrawDebugSphere(GetWorld(), chosenSpawnLocation,
-			18.f, 12, FColor::Cyan, false, 3.f);
+		FVector chosenSpawnLocation = location + direction * FMath::FRandRange(MinSpawnDistance, MaxSpawnDistance);
 
-		DrawDebugSphere(GetWorld(), location + direction * MinSpawnDistance,
-			5.f, 12, FColor::Red, false, 3.f);
-		DrawDebugSphere(GetWorld(), location + direction * MaxSpawnDistance,
-			5.f, 12, FColor::Red, false, 3.f);
+		FHitResult hit;
+		GetWorld()->LineTraceSingleByChannel(hit, chosenSpawnLocation + FVector(0.f, 0.f, 400.f),
+			chosenSpawnLocation + FVector(0.f, 0.f, 400.f), ECC_Visibility);
+
+		if (hit.bBlockingHit)
+		{
+			chosenSpawnLocation = hit.ImpactPoint;
+		}
+		spawnLocation.Add(chosenSpawnLocation);
 	}
 
 	return spawnLocation;
