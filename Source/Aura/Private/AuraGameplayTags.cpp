@@ -151,6 +151,10 @@ FString("mana"));
 		UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Abilities.Attack"),
 										 FString("Attack ability Tag"));
 
+	GameplayTags.Abilities_Summon =
+	UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Abilities.Summon"),
+									 FString("Summon Ability Tag"));
+
 	/*
 	 * Combat sockets
 	 */
