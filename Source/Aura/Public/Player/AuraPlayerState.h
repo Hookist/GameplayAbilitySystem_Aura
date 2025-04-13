@@ -10,6 +10,8 @@
 class UAbilitySystemComponent;
 class UAttributeSet;
 
+DECLARE_MULTICAST_DELEGATE_TwoParams(FPlayerStatChanged, int32 /*New Value*/ , int32 /*Old Value*/);
+
 /**
  * 
  */
@@ -18,6 +20,12 @@ class AURA_API AAuraPlayerState : public APlayerState, public IAbilitySystemInte
 {
 	GENERATED_BODY()
 
+public:
+
+	FPlayerStatChanged OnXPChanged;
+
+	FPlayerStatChanged OnLevelChanged;
+
 protected:
 
 	UPROPERTY(VisibleAnywhere)
@@ -25,6 +33,7 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
+
 
 public:
 	AAuraPlayerState();
@@ -35,7 +44,22 @@ public:
 
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
+	UFUNCTION(BlueprintCallable)
+	void SetLevel(int32 InLevel);
+
+	UFUNCTION(BlueprintCallable)
+	void AddToLevel(int32 InLevel);
+	
 	FORCEINLINE int32 GetCreatureLevel() const { return Level; }
+
+	UFUNCTION(BlueprintCallable)
+	void SetXP(int32 NewXP);
+
+	UFUNCTION(BlueprintCallable)
+	void AddToXP(int32 XPToAdd);
+
+	UFUNCTION(BlueprintCallable)
+	int32 GetXP() const;
 
 private:
 
@@ -44,4 +68,10 @@ private:
 
 	UFUNCTION()
 	void OnRep_Level(int32 OldLevel);
+
+	UPROPERTY(VisibleAnywhere, ReplicatedUsing=OnRep_XP)
+	int32 XP = 0;
+
+	UFUNCTION()
+	void OnRep_XP(int32 OldXP);
 };
