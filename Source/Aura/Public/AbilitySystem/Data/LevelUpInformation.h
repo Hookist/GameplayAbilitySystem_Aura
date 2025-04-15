@@ -39,4 +39,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	int32 FindLevelForXP(int32 InXP) const;
+
+	UFUNCTION(BlueprintCallable)
+	float GetLevelPercentage(int32 InXP) const;
 };

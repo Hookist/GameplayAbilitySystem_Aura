@@ -67,6 +67,16 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 			}
 		);
 	}
+
+	auto auraPlayerState = Cast<AAuraPlayerState>(PlayerState);
+
+	if (auraPlayerState)
+	{
+		auraPlayerState->OnXPChanged.AddLambda([this](int32 newValue, int32 oldValue)
+		{
+			OnXPChanged.Broadcast(newValue);
+		});
+	}
 }
 
 void UOverlayWidgetController::OnInitializeStartupAbilities(UAuraAbilitySystemComponent* AuraAbilitySystemComponent)
