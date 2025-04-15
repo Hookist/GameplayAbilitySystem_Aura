@@ -39,6 +39,7 @@ struct FWidgetControllerParams
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float, NewValue);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAttributeChangedSignature2, float, NewValue, float, OldValue);
 
 /**
  * 
