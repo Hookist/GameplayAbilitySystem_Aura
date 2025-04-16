@@ -181,3 +181,19 @@ bool UAuraAbilitySystemLibrary::IsNotFriend(AActor* FirstActor, AActor* SecondAc
 	const bool friends = bothArePlayers || bothAreEnemies;
 	return !friends;
 }
+
+float UAuraAbilitySystemLibrary::GetXPReward(const UObject* WorldContextObject, ECharacterClass CharacterClass,
+	int32 CreatureLevel)
+{
+	auto auraGameMode = WorldContextObject->GetWorld()->GetAuthGameMode<AAuraGameModeBase>();
+	
+	FName enumName = StaticEnum<ECharacterClass>()->GetNameByValue(static_cast<uint8>(CharacterClass));
+	UE_LOG(LogTemp, Log, TEXT("Enum name: %s"), *enumName.ToString());
+	FString contextString = "";
+	
+	FRealCurve* xpRewardCurve = auraGameMode->RewardCurveTable->FindCurve(enumName, contextString);
+	const float xpReward = xpRewardCurve->Eval(CreatureLevel);
+
+	return xpReward;
+	
+}
