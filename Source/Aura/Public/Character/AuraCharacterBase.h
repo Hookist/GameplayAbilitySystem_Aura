@@ -105,7 +105,7 @@ protected:
 	TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
-	ECharacterClass CharacterClass = ECharacterClass::Warrior;
+	ECharacterClass CharacterClass = ECharacterClass::Elementalist;
 
 	/* Dissolve Effects */
 
