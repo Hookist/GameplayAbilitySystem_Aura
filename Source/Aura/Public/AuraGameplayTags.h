@@ -42,6 +42,8 @@ public:
 	FGameplayTag Attributes_Vital_Health;
 	FGameplayTag Attributes_Vital_Mana;
 
+	FGameplayTag Attributes_Meta_IncomingXP;
+
 	FGameplayTag InputTag_LMB;
 	FGameplayTag InputTag_RMB;
 	FGameplayTag InputTag_1;

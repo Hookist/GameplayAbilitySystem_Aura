@@ -196,4 +196,5 @@ void AAuraCharacterBase::AddCharacterAbilities()
 	if (!HasAuthority()) return;
 
 	auraAbilitySystemComponent->AddCharacterAbilities(StartupAbilities);
+	auraAbilitySystemComponent->AddCharacterPassiveAbilities(StartupPassiveAbilities);
 }
