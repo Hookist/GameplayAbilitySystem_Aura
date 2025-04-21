@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Character/AuraCharacterBase.h"
+#include "Interaction/PlayerInterface.h"
 #include "AuraCharacter.generated.h"
 
 class UGameplayEffect;
@@ -13,7 +14,7 @@ class USpringArmComponent;
  * 
  */
 UCLASS()
-class AURA_API AAuraCharacter : public AAuraCharacterBase
+class AURA_API AAuraCharacter : public AAuraCharacterBase, public IPlayerInterface
 {
 	GENERATED_BODY()
 
@@ -42,4 +43,13 @@ public:
 protected:
 
 	virtual void InitAbilityActorInfo() override;
+
+#pragma region Player Interface
+
+public:
+
+	virtual void AddToXP_Implementation(int32 InXP) override;
+	
+#pragma endregion 
+	
 };

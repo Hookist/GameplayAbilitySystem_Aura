@@ -75,3 +75,10 @@ void AAuraCharacter::InitAbilityActorInfo()
 
 	InitializeDefaultAttributes();
 }
+
+void AAuraCharacter::AddToXP_Implementation(int32 InXP)
+{
+	auto auraPlayerState = GetPlayerState<AAuraPlayerState>();
+	check(auraPlayerState);
+	auraPlayerState->AddToXP(InXP);
+}
