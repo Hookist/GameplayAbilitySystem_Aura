@@ -80,10 +80,9 @@ void UAuraAbilitySystemLibrary::GiveStartupAbilities(const UObject* WorldContext
 		ASC->GiveAbility(abilitySpec);
 	}
 	const FCharacterClassDefaultInfo& defaultInfo = characterClassInfo->GetClassDefaultInfo(CharacterClass);
-	auto combatInterface = Cast<ICombatInterface>(ASC->GetAvatarActor());
 	for (TSubclassOf<UGameplayAbility> AbilityClass : defaultInfo.StartupAbilities)
 	{
-		auto abilitySpec = FGameplayAbilitySpec(AbilityClass, combatInterface->GetCreatureLevel());
+		auto abilitySpec = FGameplayAbilitySpec(AbilityClass, ICombatInterface::Execute_GetCreatureLevel(ASC->GetAvatarActor()));
 		ASC->GiveAbility(abilitySpec);
 	}
 }

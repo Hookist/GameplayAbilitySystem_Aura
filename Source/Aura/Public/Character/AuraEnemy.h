@@ -52,7 +52,7 @@ public:
 
 #pragma region Combat Interface
 
-	virtual int32 GetCreatureLevel() override;
+	virtual int32 GetCreatureLevel_Implementation() override;
 
 	virtual void Die() override;
 

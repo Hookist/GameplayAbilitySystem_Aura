@@ -29,8 +29,11 @@ float UMMC_MaxMana::CalculateBaseMagnitude_Implementation(const FGameplayEffectS
 	GetCapturedAttributeMagnitude(IntelligenceDef, Spec, evaluationParameters, intelligence);
 	intelligence = FMath::Max<float>(intelligence, 0.f);
 
-	auto combatInterface = Cast<ICombatInterface>(Spec.GetContext().GetSourceObject());
-	const int32 playerLevel = combatInterface->GetCreatureLevel();
+	int32 playerLevel = 1;
+	if (Spec.GetContext().GetSourceObject()->Implements<UCombatInterface>())
+	{
+		playerLevel = ICombatInterface::Execute_GetCreatureLevel(Spec.GetContext().GetSourceObject());
+	}
 
 	return 40.f + 2.5f * intelligence + 8.f * playerLevel;
 }

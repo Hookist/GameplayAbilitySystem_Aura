@@ -36,7 +36,7 @@ public:
 
 #pragma region Combat Interface
 
-	virtual int32 GetCreatureLevel() override;
+	virtual int32 GetCreatureLevel_Implementation() override;
 	
 #pragma endregion 
 
@@ -49,6 +49,7 @@ protected:
 public:
 
 	virtual void AddToXP_Implementation(int32 InXP) override;
+	virtual void LevelUp_Implementation() override;
 	
 #pragma endregion 
 	
