@@ -10,6 +10,7 @@
 class UGameplayEffect;
 class UCameraComponent;
 class USpringArmComponent;
+class UNiagaraComponent;
 /**
  * 
  */
@@ -20,10 +21,10 @@ class AURA_API AAuraCharacter : public AAuraCharacterBase, public IPlayerInterfa
 
 protected:
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UCameraComponent* CameraComponent;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	USpringArmComponent* CameraSpringArmComponent;
 
 public:
@@ -58,6 +59,16 @@ public:
 	virtual void AddToSpellPoints_Implementation(int32 InSpellPoints) override;
 	virtual void AddToAttributePoints_Implementation(int32 InAttributePoints) override;
 	
-#pragma endregion 
+#pragma endregion
+
+public:
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<UNiagaraComponent> LevelUpNiagaraComponent;
+
+private:
+
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastLevelUpParticles() const;
 	
 };

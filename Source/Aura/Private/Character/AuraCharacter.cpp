@@ -4,6 +4,7 @@
 #include "Character/AuraCharacter.h"
 
 #include "AbilitySystemComponent.h"
+#include "NiagaraComponent.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/Data/LevelUpInformation.h"
 #include "Camera/CameraComponent.h"
@@ -14,10 +15,18 @@
 
 AAuraCharacter::AAuraCharacter()
 {
-	CameraComponent = CreateDefaultSubobject<UCameraComponent>("CameraComponent");
+	LevelUpNiagaraComponent = CreateDefaultSubobject<UNiagaraComponent>("LevelUpNiagaraComponent");
+	LevelUpNiagaraComponent->SetupAttachment(GetRootComponent());
+	LevelUpNiagaraComponent->bAutoActivate = false;
+	
 	CameraSpringArmComponent = CreateDefaultSubobject<USpringArmComponent>("CameraSpringArmComponent");
 	CameraSpringArmComponent->SetupAttachment(GetRootComponent());
-	CameraComponent->SetupAttachment(CameraSpringArmComponent);
+	CameraSpringArmComponent->SetUsingAbsoluteRotation(true);
+	CameraSpringArmComponent->bDoCollisionTest = false;
+
+	CameraComponent = CreateDefaultSubobject<UCameraComponent>("CameraComponent");
+	CameraComponent->SetupAttachment(CameraSpringArmComponent, USpringArmComponent::SocketName);
+	CameraComponent->bUsePawnControlRotation = false;
 
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 400.f, 0.f);
@@ -86,7 +95,7 @@ void AAuraCharacter::AddToXP_Implementation(int32 InXP)
 
 void AAuraCharacter::LevelUp_Implementation()
 {
-	
+	MulticastLevelUpParticles();
 }
 
 int32 AAuraCharacter::GetXP_Implementation() const
@@ -134,4 +143,16 @@ void AAuraCharacter::AddToSpellPoints_Implementation(int32 InSpellPoints)
 void AAuraCharacter::AddToAttributePoints_Implementation(int32 InAttributePoints)
 {
 	// TODO: Add AttributePoints to PlayerState
+}
+
+void AAuraCharacter::MulticastLevelUpParticles_Implementation() const
+{
+	if (IsValid(LevelUpNiagaraComponent))
+	{
+		const FVector cameraLocation = CameraComponent->GetComponentLocation();
+		const FVector niagaraSystemLocation = LevelUpNiagaraComponent->GetComponentLocation();
+		const FRotator toCameraRotation = (cameraLocation - niagaraSystemLocation).Rotation();
+		LevelUpNiagaraComponent->SetWorldRotation(toCameraRotation);
+		LevelUpNiagaraComponent->Activate(true);
+	}
 }
