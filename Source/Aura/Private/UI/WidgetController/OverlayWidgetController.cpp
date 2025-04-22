@@ -74,6 +74,12 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 	if (auraPlayerState)
 	{
 		auraPlayerState->OnXPChanged.AddUObject(this, &UOverlayWidgetController::HandleXPChanged);
+		auraPlayerState->OnLevelChanged.AddLambda(
+			[this](int32 NewLevel, int32 OldLevel)
+			{
+				OnPlayerLevelChangedDelegate.Broadcast(NewLevel);
+			}
+		);
 	}
 }
 
