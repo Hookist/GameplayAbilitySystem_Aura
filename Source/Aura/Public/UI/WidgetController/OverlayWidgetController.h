@@ -79,6 +79,12 @@ public:
 	UPROPERTY(BlueprintAssignable, Category="GAS|Level")
 	FOnPlayerStatChangedSignature OnPlayerLevelChangedDelegate;
 
+	UPROPERTY(BlueprintAssignable, Category="GAS|Points")
+	FOnPlayerStatChangedSignature OnPlayerAttributePointsChangedDelegate;
+
+	UPROPERTY(BlueprintAssignable, Category="GAS|Points")
+	FOnPlayerStatChangedSignature OnPlayerSpellPointsChangedDelegate;
+
 protected:
 
 	template<typename T>

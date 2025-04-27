@@ -80,6 +80,20 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 				OnPlayerLevelChangedDelegate.Broadcast(NewLevel);
 			}
 		);
+
+		auraPlayerState->OnAttributePointsChanged.AddLambda(
+			[this](int32 NewPoints, int32 OldPoints)
+			{
+				OnPlayerAttributePointsChangedDelegate.Broadcast(NewPoints);
+			}
+		);
+
+		auraPlayerState->OnSpellPointsChanged.AddLambda(
+			[this](int32 NewPoints, int32 OldPoints)
+			{
+				OnPlayerSpellPointsChangedDelegate.Broadcast(NewPoints);
+			}
+		);
 	}
 }
 

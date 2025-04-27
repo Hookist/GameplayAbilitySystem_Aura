@@ -27,6 +27,10 @@ public:
 
 	FPlayerStatChanged OnLevelChanged;
 
+	FPlayerStatChanged OnAttributePointsChanged;
+
+	FPlayerStatChanged OnSpellPointsChanged;
+
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<ULevelUpInfo> LevelUpInfo;
 
@@ -78,4 +82,16 @@ private:
 
 	UFUNCTION()
 	void OnRep_XP(int32 OldXP);
+
+	UPROPERTY(VisibleAnywhere, ReplicatedUsing=OnRep_AttributePoints)
+	int32 AttributePoints = 0;
+
+	UFUNCTION()
+	void OnRep_AttributePoints(int32 OldAttributePoints);
+
+	UPROPERTY(VisibleAnywhere, ReplicatedUsing=OnRep_SpellPoints)
+	int32 SpellPoints = 0;
+
+	UFUNCTION()
+	void OnRep_SpellPoints(int32 OldSpellPoints);
 };
