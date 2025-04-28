@@ -4,6 +4,8 @@
 #include <UI/WidgetController/AttributeMenuWidgetController.h>
 
 #include "AbilitySystem/Data/AttributeInfo.h"
+#include "Chaos/Pair.h"
+#include "Player/AuraPlayerState.h"
 
 void UAttributeMenuWidgetController::BroadcastInitialValues()
 {
@@ -15,6 +17,9 @@ void UAttributeMenuWidgetController::BroadcastInitialValues()
 	{
 		BroadcastAttributeInfo(Pair.Key, Pair.Value());
 	}
+
+	const auto auraPlayerState = CastChecked<AAuraPlayerState>(PlayerState);
+	OnPlayerAttributePointsChangedDelegate.Broadcast(auraPlayerState->GetAttributePoints());
 }
 
 void UAttributeMenuWidgetController::BindCallbacksToDependencies()
@@ -32,6 +37,26 @@ void UAttributeMenuWidgetController::BindCallbacksToDependencies()
 			}
 		);
 	}
+
+	const auto auraPlayerState = CastChecked<AAuraPlayerState>(PlayerState);
+
+	if (auraPlayerState)
+	{
+		auraPlayerState->OnAttributePointsChanged.AddLambda(
+			[this](int32 NewPoints, int32 OldPoints)
+			{
+				OnPlayerAttributePointsChangedDelegate.Broadcast(NewPoints);
+			}
+		);
+
+		auraPlayerState->OnSpellPointsChanged.AddLambda(
+			[this](int32 NewPoints, int32 OldPoints)
+			{
+				OnPlayerSpellPointsChangedDelegate.Broadcast(NewPoints);
+			}
+		);
+	}
+
 }
 
 void UAttributeMenuWidgetController::BroadcastAttributeInfo(const FGameplayTag& AttributeTag,

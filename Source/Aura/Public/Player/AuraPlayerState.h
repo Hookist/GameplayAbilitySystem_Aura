@@ -69,6 +69,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	int32 GetXP() const;
 
+	int32 GetAttributePoints() const; 
+	
+	void AddAttributePoints(int32 PointsToAdd);
+
+	void AddSpellPoints(int32 PointsToAdd);
+
 private:
 
 	UPROPERTY(VisibleAnywhere, ReplicatedUsing=OnRep_Level)

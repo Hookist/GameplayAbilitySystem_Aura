@@ -138,11 +138,17 @@ void AAuraCharacter::AddToPlayerLevel_Implementation(int32 InPlayerLevel)
 void AAuraCharacter::AddToSpellPoints_Implementation(int32 InSpellPoints)
 {
 	// TODO: Add SpellPoints to PlayerState
+	auto auraPlayerState = GetPlayerState<AAuraPlayerState>();
+	check(auraPlayerState);
+	auraPlayerState->AddSpellPoints(InSpellPoints);
 }
 
 void AAuraCharacter::AddToAttributePoints_Implementation(int32 InAttributePoints)
 {
 	// TODO: Add AttributePoints to PlayerState
+	auto auraPlayerState = GetPlayerState<AAuraPlayerState>();
+	check(auraPlayerState);
+	auraPlayerState->AddAttributePoints(InAttributePoints);
 }
 
 void AAuraCharacter::MulticastLevelUpParticles_Implementation() const
