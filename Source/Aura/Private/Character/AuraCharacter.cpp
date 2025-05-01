@@ -151,6 +151,20 @@ void AAuraCharacter::AddToAttributePoints_Implementation(int32 InAttributePoints
 	auraPlayerState->AddAttributePoints(InAttributePoints);
 }
 
+int32 AAuraCharacter::GetAttributePoints_Implementation() const
+{
+	auto auraPlayerState = GetPlayerState<AAuraPlayerState>();
+	check(auraPlayerState);
+	return auraPlayerState->GetAttributePoints();
+}
+
+int32 AAuraCharacter::GetSpellPoints_Implementation() const
+{
+	auto auraPlayerState = GetPlayerState<AAuraPlayerState>();
+	check(auraPlayerState);
+	return auraPlayerState->GetSpellPoints();
+}
+
 void AAuraCharacter::MulticastLevelUpParticles_Implementation() const
 {
 	if (IsValid(LevelUpNiagaraComponent))

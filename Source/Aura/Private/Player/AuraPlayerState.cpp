@@ -85,6 +85,11 @@ void AAuraPlayerState::AddSpellPoints(int32 PointsToAdd)
 	OnSpellPointsChanged.Broadcast(SpellPoints, oldSpellPoints);
 }
 
+int32 AAuraPlayerState::GetSpellPoints() const
+{
+	return SpellPoints;
+}
+
 void AAuraPlayerState::OnRep_Level(int32 OldLevel)
 {
 	OnLevelChanged.Broadcast(Level, OldLevel);

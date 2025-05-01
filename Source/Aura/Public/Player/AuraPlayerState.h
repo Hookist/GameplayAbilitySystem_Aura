@@ -75,6 +75,8 @@ public:
 
 	void AddSpellPoints(int32 PointsToAdd);
 
+	int32 GetSpellPoints() const;
+
 private:
 
 	UPROPERTY(VisibleAnywhere, ReplicatedUsing=OnRep_Level)

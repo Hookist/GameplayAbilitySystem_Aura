@@ -3,6 +3,7 @@
 
 #include <UI/WidgetController/AttributeMenuWidgetController.h>
 
+#include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/Data/AttributeInfo.h"
 #include "Chaos/Pair.h"
 #include "Player/AuraPlayerState.h"
@@ -59,8 +60,14 @@ void UAttributeMenuWidgetController::BindCallbacksToDependencies()
 
 }
 
+void UAttributeMenuWidgetController::UpgradeAttribute(const FGameplayTag& AttributeTag)
+{
+	UAuraAbilitySystemComponent* auraASC = CastChecked<UAuraAbilitySystemComponent>(AbilitySystemComponent);
+	auraASC->UpgradeAttribute(AttributeTag);
+}
+
 void UAttributeMenuWidgetController::BroadcastAttributeInfo(const FGameplayTag& AttributeTag,
-	const FGameplayAttribute& Attribute) const
+                                                            const FGameplayAttribute& Attribute) const
 {
 	FAuraAttributeInfo info = AttributeInfo->FindAttributeInfoForTag(AttributeTag);
 	info.AttributeValue = Attribute.GetNumericValue(AttributeSet);
