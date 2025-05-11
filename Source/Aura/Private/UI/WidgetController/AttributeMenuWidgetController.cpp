@@ -25,11 +25,7 @@ void UAttributeMenuWidgetController::BroadcastInitialValues()
 
 void UAttributeMenuWidgetController::BindCallbacksToDependencies()
 {
-	const auto auraAttributeSet = Cast<UAuraAttributeSet>(AttributeSet);
-
-	check(auraAttributeSet);
-	
-	for (auto& Pair : auraAttributeSet->TagsToAttributes)
+	for (auto& Pair : GetAuraAS()->TagsToAttributes)
 	{
 		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Pair.Value()).AddLambda(
 			[this, Pair](const FOnAttributeChangeData& Data)
@@ -38,19 +34,17 @@ void UAttributeMenuWidgetController::BindCallbacksToDependencies()
 			}
 		);
 	}
-
-	const auto auraPlayerState = CastChecked<AAuraPlayerState>(PlayerState);
-
-	if (auraPlayerState)
+	
+	if (GetAuraPS())
 	{
-		auraPlayerState->OnAttributePointsChanged.AddLambda(
+		GetAuraPS()->OnAttributePointsChanged.AddLambda(
 			[this](int32 NewPoints, int32 OldPoints)
 			{
 				OnPlayerAttributePointsChangedDelegate.Broadcast(NewPoints);
 			}
 		);
 
-		auraPlayerState->OnSpellPointsChanged.AddLambda(
+		GetAuraPS()->OnSpellPointsChanged.AddLambda(
 			[this](int32 NewPoints, int32 OldPoints)
 			{
 				OnPlayerSpellPointsChangedDelegate.Broadcast(NewPoints);
