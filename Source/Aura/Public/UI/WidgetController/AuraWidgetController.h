@@ -90,7 +90,7 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, Category="WidgetController")
 	TObjectPtr<AAuraPlayerState> AuraPlayerState;
-
+ 
 	UPROPERTY(BlueprintReadOnly, Category="WidgetController")
 	TObjectPtr<UAuraAbilitySystemComponent> AuraAbilitySystemComponent;
 
