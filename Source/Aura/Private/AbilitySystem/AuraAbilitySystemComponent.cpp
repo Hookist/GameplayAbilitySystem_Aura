@@ -5,7 +5,10 @@
 
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AuraGameplayTags.h"
+#include "NiagaraDebuggerCommon.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AbilitySystem/Abilities/AuraGameplayAbility.h"
+#include "AbilitySystem/Data/AbilityInfo.h"
 #include "Aura/AuraLogChannels.h"
 #include "Interaction/PlayerInterface.h"
 
@@ -123,6 +126,22 @@ FGameplayTag UAuraAbilitySystemComponent::GetStatusFromSpec(const FGameplayAbili
 	return FGameplayTag();
 }
 
+FGameplayAbilitySpec* UAuraAbilitySystemComponent::GetSpecFromAbilityTag(const FGameplayTag& AbilityTag)
+{
+	FScopedAbilityListLock activeScopeLock(*this);
+	for (FGameplayAbilitySpec& abilitySpec : GetActivatableAbilities())
+	{
+		for (FGameplayTag tag : abilitySpec.Ability.Get()->AbilityTags)
+		{
+			if (tag.MatchesTagExact(AbilityTag))
+			{
+				return &abilitySpec;
+			}
+		}
+	}
+	return nullptr;
+}
+
 void UAuraAbilitySystemComponent::UpgradeAttribute(const FGameplayTag& AttributeTag)
 {
 	if (GetAvatarActor()->Implements<UPlayerInterface>())
@@ -145,6 +164,26 @@ void UAuraAbilitySystemComponent::ServerUpgradeAttribute_Implementation(const FG
 	if (GetAvatarActor()->Implements<UPlayerInterface>())
 	{
 		IPlayerInterface::Execute_AddToAttributePoints(GetAvatarActor(), -1);
+	}
+}
+
+void UAuraAbilitySystemComponent::UpdateAbilityStatuses(int32 Level)
+{
+	UAbilityInfo* abilityInfo = UAuraAbilitySystemLibrary::GetAbilityInfo(GetAvatarActor());
+	for (const FAuraAbilityInfo& info : abilityInfo->AbilitiesInformation)
+	{
+		if (!info.AbilityTag.IsValid()) continue;
+		
+		if (Level < info.LevelRequirement) continue;
+			
+		if (GetSpecFromAbilityTag(info.AbilityTag) == nullptr)
+		{
+			FGameplayAbilitySpec abilitySpec = FGameplayAbilitySpec(info.Ability, 1);
+			abilitySpec.DynamicAbilityTags.AddTag(FAuraGameplayTags::Get().Abilities_Status_Eligible);
+			GiveAbility(abilitySpec);
+			// force to replicate
+			MarkAbilitySpecDirty(abilitySpec);
+		}
 	}
 }
 
