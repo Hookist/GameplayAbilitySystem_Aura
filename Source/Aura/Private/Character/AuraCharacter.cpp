@@ -133,6 +133,11 @@ void AAuraCharacter::AddToPlayerLevel_Implementation(int32 InPlayerLevel)
 	auto auraPlayerState = GetPlayerState<AAuraPlayerState>();
 	check(auraPlayerState);
 	auraPlayerState->AddToLevel(InPlayerLevel);
+
+	if (auto auraASC = Cast<UAuraAbilitySystemComponent>(GetAbilitySystemComponent()))
+	{
+		auraASC->UpdateAbilityStatuses(auraPlayerState->GetCreatureLevel());
+	}
 }
 
 void AAuraCharacter::AddToSpellPoints_Implementation(int32 InSpellPoints)
