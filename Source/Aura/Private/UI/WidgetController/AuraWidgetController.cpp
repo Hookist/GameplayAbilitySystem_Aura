@@ -14,6 +14,9 @@ void UAuraWidgetController::SetWidgetControllerParams(const FWidgetControllerPar
 	PlayerState = WCParams.PlayerState;
 	AbilitySystemComponent = WCParams.AbilitySystemComponent;
 	AttributeSet = WCParams.AttributeSet;
+	AuraPlayerState = Cast<AAuraPlayerState>(PlayerState);
+	AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent);
+	AuraAttributeSet = Cast<UAuraAttributeSet>(AttributeSet);
 }
 
 void UAuraWidgetController::BroadcastInitialValues()
