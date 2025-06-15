@@ -164,6 +164,10 @@ FString("mana"));
 	 * Abilities
 	 */
 
+	GameplayTags.Abilities_None =
+	UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Abilities.None"),
+									 FString("No ability - like the nullptr for Ability Tags"));
+
 	GameplayTags.Abilities_Attack =
 		UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Abilities.Attack"),
 										 FString("Attack ability Tag"));
