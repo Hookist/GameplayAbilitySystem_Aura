@@ -142,6 +142,36 @@ FGameplayAbilitySpec* UAuraAbilitySystemComponent::GetSpecFromAbilityTag(const F
 	return nullptr;
 }
 
+bool UAuraAbilitySystemComponent::TryGetAbilityStatus(const FGameplayTag& AbilityTag, FGameplayTag& StatusTag)
+{
+	FGameplayAbilitySpec* abilitySpec = GetSpecFromAbilityTag(AbilityTag);
+	if (!abilitySpec)
+		return false;
+
+	if (abilitySpec->DynamicAbilityTags.HasTagExact(FAuraGameplayTags::Get().Abilities_Status_Eligible))
+	{
+		StatusTag = FAuraGameplayTags::Get().Abilities_Status_Eligible;
+		return true;
+	}
+	if (abilitySpec->DynamicAbilityTags.HasTagExact(FAuraGameplayTags::Get().Abilities_Status_Equipped))
+	{
+		StatusTag = FAuraGameplayTags::Get().Abilities_Status_Equipped;
+		return true;
+	}
+	if (abilitySpec->DynamicAbilityTags.HasTagExact(FAuraGameplayTags::Get().Abilities_Status_Locked))
+	{
+		StatusTag = FAuraGameplayTags::Get().Abilities_Status_Locked;
+		return true;
+	}
+	if (abilitySpec->DynamicAbilityTags.HasTagExact(FAuraGameplayTags::Get().Abilities_Status_Unlocked))
+	{
+		StatusTag = FAuraGameplayTags::Get().Abilities_Status_Unlocked;
+		return true;
+	}
+		
+	return false;
+}
+
 void UAuraAbilitySystemComponent::UpgradeAttribute(const FGameplayTag& AttributeTag)
 {
 	if (GetAvatarActor()->Implements<UPlayerInterface>())

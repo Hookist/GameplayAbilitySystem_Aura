@@ -41,6 +41,9 @@ public:
 
 	FGameplayAbilitySpec* GetSpecFromAbilityTag(const FGameplayTag& AbilityTag);
 
+	UFUNCTION(BlueprintCallable)
+	bool TryGetAbilityStatus(const FGameplayTag& AbilityTag, FGameplayTag& StatusTag);
+
 	void UpgradeAttribute(const FGameplayTag& AttributeTag);
 
 	UFUNCTION(Server, Reliable)
